@@ -189,7 +189,7 @@ function smarty_cms_help_function_birdFeed() {
     		<li>parselinks <em>(optional)</em> - is optional, default setting is 1. This determines whether or not hashtags (#hash), usernames (@username) and links (http://example.com) within the tweet should be converted to actual working links. If set to 0 plan text will be returned.</li>
     	</ul>
     	<h3>Template Settings</h3>
-    	<p>Incorporating the BirdFeed in your template is pretty straight forward and works much the same way that most other templates in CMSMS work. Below is an exmaple.</p>
+    	<p>Incorporating BirdFeed in your template is pretty straight forward and works much the same way that most other templates in CMSMS work. Below is an example.</p>
 		<p>
     		{birdFeed username=bbonora count=10 dateformat=friendly}<br />
     		{foreach from=$tweets item=item}<br />
