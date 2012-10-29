@@ -64,14 +64,24 @@ function parseDate($str,$dateformat) {
 	if ($dateformat== 'friendly') {
 
 		// friendly date format
-		$ival = $now->diff($stime);
-				
-		$yr = $ival->y;
-		$mh = $ival->m + ($ival->d > 15);
+		$diffAsU = $now->format('U') - $stime->format('U');		
+		$ival = new DateTime("@$diffAsU");
+
+        $ivalY = $ival->format("Y") - 1970;
+        $ivalM = $ival->format("n");
+        $ivalD = $ival->format("j");
+        $ivalH = $ival->format("G");
+        $ivalI = $ival->format("i"); //NOTE: this has leading zeroes
+        $ivalS = $ival->format("s"); //NOTE: this has leading zeroes
+        
+        $yr = $ivalY;
+        $mh = $ivalM + ($ivalD > 15);	
+
 		if ($mh > 11) $yr = 1;
-		$dy = $ival->d + ($ival->h > 15);
-		$hr = $ival->h;
-		$mn = $ival->i + ($ival->s > 29);
+
+        $dy = $ivalD + ($ivalH > 15);
+        $hr = $ivalH;
+        $mn = $ivalI + ($ivalS > 29);		
 				
 		if ($yr > 0) {
 			if ($yr == 1) $date = 'last year';
@@ -88,7 +98,7 @@ function parseDate($str,$dateformat) {
 			else $date = round($dy / 7) . ' weeks ago';
 		}
 		else if ($hr > 0) {
-			$hr += ($ival->i > 29);
+			$hr += ($ivalI > 29);
 			$date = $hr . ' hour' . ($hr == 1 ? '' : 's') . ' ago';
 		}
 		else {
@@ -105,7 +115,7 @@ function parseDate($str,$dateformat) {
 	return $date;
 }
 
-function smarty_cms_function_birdFeed ($params) {
+function smarty_cms_function_birdfeed ($params) {
 	
 	$gCms = cmsms();
 	$config = $gCms->GetConfig();
@@ -143,7 +153,7 @@ function smarty_cms_function_birdFeed ($params) {
 	
 }
 
-function smarty_cms_help_function_birdFeed() {
+function smarty_cms_help_function_birdfeed() {
 ?>
 <div id="page_tabs">
     <div id="general">
@@ -174,7 +184,7 @@ function smarty_cms_help_function_birdFeed() {
     	{birdFeed username=bbonora count=10 dateformat=friendly}
     	</p>
     	<p>Once the tag has been inserted you now have access to the "$tweets" or {$tweets} variable. For example you could do something like this:<br /><br />
-    		{birdFeed username=bbonora count=10 dateformat=friendly}<br />
+    		{birdfeed username=bbonora count=10 dateformat=friendly}<br />
     		{foreach from=$tweets item=item}<br />
     		<span style="margin-left: 20px;">&lt;div class='twitterDate'&gt;{$item->date}&lt;/div&gt;<br /></span>
     		<span style="margin-left: 20px;">&lt;div class='twitterText'&gt;{$item->text}&lt;/div&gt;<br /></span>
@@ -217,7 +227,7 @@ function smarty_cms_help_function_birdFeed() {
 </div>
 <?php	
 }
-function smarty_cms_about_function_birdFeed() {
+function smarty_cms_about_function_birdfeed() {
 ?>
 <p>
 	Author: Ben Bonora <a href="http://www.bennyvbonora.com" title="Ben V. Bonora" target="_blank">www.bennyvbonora.com</a>
