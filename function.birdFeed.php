@@ -24,7 +24,7 @@ function fetchFeed($tid,$count) {
 		// fetch feed
 		$c = curl_init();
 		curl_setopt_array($c, array(
-			CURLOPT_URL => 'http://twitter.com/statuses/user_timeline/' . $tid . '.json?count=' . $count,
+			CURLOPT_URL => 'http://api.twitter.com/1/statuses/user_timeline.json?screen_name=' . $tid . '&count=' . $count,
 			CURLOPT_HEADER => false,
 			CURLOPT_TIMEOUT => 10,
 			CURLOPT_RETURNTRANSFER => true
@@ -201,7 +201,7 @@ function smarty_cms_help_function_birdfeed() {
     	<h3>Template Settings</h3>
     	<p>Incorporating BirdFeed in your template is pretty straight forward and works much the same way that most other templates in CMSMS work. Below is an example.</p>
 		<p>
-    		{birdFeed username=bbonora count=10 dateformat=friendly}<br />
+    		{birdfeed username=bbonora count=10 dateformat=friendly}<br />
     		{foreach from=$tweets item=item}<br />
     		<span style="margin-left: 20px;">&lt;div class='twitterDate'&gt;{$item->date}&lt;/div&gt;<br /></span>
     		<span style="margin-left: 20px;">&lt;div class='twitterText'&gt;{$item->text}&lt;/div&gt;<br /></span>
